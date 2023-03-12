@@ -3,7 +3,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(evil-mu4e)))
+ '(package-selected-packages
+   '(org-super-agenda evil-mu4e org-pdftools org-download org-attach-screenshot request languagetool org-modern)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
