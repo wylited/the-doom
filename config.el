@@ -24,7 +24,6 @@
       org-agenda-include-deadlines t
       org-agenda-include-diary t
       org-agenda-block-separator nil
-      org-agenda-compact-blocks t
       org-agenda-start-with-log-mode t)
 
 (setq-default
@@ -41,7 +40,7 @@
 ; Modeline changes
 (setq doom-modeline-enable-word-count t
         doom-modeline-icon t
-        doom-modeline-header-line nili
+        doom-modeline-header-line nil
         doom-modeline-workspace-name t
         doom-modeline-time t
         doom-modeline-env-version t)
@@ -51,9 +50,12 @@
 
 ;; (doom/set-frame-opacity 0.93) ; slight opacity, 0.93 is the best
 
+;; Org Super Agenda - Getting stuff done
+
 (setq org-agenda-custom-commands
-      '(("w" "Super wyli view"
-         ((agenda "" ((org-agenda-span 'day)
+      '(("w" "Wyli View"
+         ((agenda "" ((org-agenda-span 5)
+                      (org-agenda-overriding-header "cal")
                       (org-super-agenda-groups
                        '((:name "Today"
                                 :time-grid t
@@ -61,27 +63,19 @@
                                 :todo "TODAY"
                                 :scheduled today
                                 :order 1)))))
-          (alltodo "" ((org-agenda-overriding-header "")
-                       (org-super-agenda-groups
-                        '((:name "Next to do"
-                                 :todo "NEXT"
-                                 :order 1)
-                          (:name "Important"
-                                 :tag "important"
-                                 :priority>= "C"
-                                 :order 6)
-                          (:name "Due Today"
-                                 :deadline today
-                                 :order 2)
-                          (:name "Due Soon"
-                                 :deadline future
-                                 :order 8)
-                          (:name "Overdue"
-                                 :deadline past
-                                 :order 7)
-                          (:name "Exams"
-                                :tag "exams"
-                                :order 10)))))))))
+          (org-agenda-list "" ((org-agenda-overriding-header "items")
+                      (org-super-agenda-groups
+                       '((:name "Important"
+                                :priority "A"
+                                :order 1)
+                         (:name "Homework"
+                                :tag "hw"
+                                :order 2)
+                         (:name :"Exams"
+                                :tag "exam"
+                                :order 3))
+                       )))
+          ))))
 
 ;; Copilot my only true friend
 (use-package! copilot
