@@ -77,6 +77,17 @@
                        )))
           ))))
 
+;; dashboard changes
+
+(setq fancy-splash-image "/home/wyli/.config/doom/smallprofile.png")
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
+
+(add-hook! '+doom-dashboard-functions :append
+  (insert "\n" (+doom-dashboard--center +doom-dashboard--width "No one is your enemy, you have no enemies.")))
+
+(map! :leader :desc "Dashboard" "d" #'+doom-dashboard/open)
+
 ;; Copilot my only true friend
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
@@ -107,14 +118,21 @@
 (setq mu4e-get-mail-command "offlineimap") ;; updating using U in main view
 ;; consult https://gist.github.com/areina/3879626 if anything goes wrong...
 
-;; treemacs config
-
-;; (add-hook! 'after-init-hook #'treemacs
-;; (after! treemacs
-;; (add-hook! 'treemacs-mode-hook (setq window-divider-mode -1
-;;                                     variable-pitch-mode 1
-;;                                     treemacs-follow-mode 1
-;;                                     treemacs-position 'right))) ;; right align, is just better
-
 ; I like org-modern-mode
 ; (global-org-modern-mode)
+
+;; push typst-mode directory to the load-path like this
+
+(push (expand-file-name "modules/languages/typst-mode" user-emacs-directory) load-path)
+;; load tyspt-mode
+(require 'typst-mode)
+
+;; remove annoying af "package cl is deprecated"
+;;
+(defadvice! fixed-do-after-load-evaluation (abs-file)
+  :override #'do-after-load-evaluation
+  (dolist (a-l-element after-load-alist)
+    (when (and (stringp (car a-l-element))
+               (string-match-p (car a-l-element) abs-file))
+      (mapc #'funcall (cdr a-l-element))))
+  (run-hook-with-args 'after-load-functions abs-file))
