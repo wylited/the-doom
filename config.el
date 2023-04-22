@@ -34,8 +34,13 @@
 (setq undo-limit 80000000                       ; Raise undo-limit to 80Mb
       evil-want-fine-undo t                     ; By default while in insert all changes are one big blob. Be more granular
       auto-save-default t                       ; Nobody likes to loose work, I certainly don't
-      truncate-string-ellipsis "…"              ; Unicode ellispis are nicer than "...", and also save /precious/ space
-      scroll-margin 2)                          ; It's nice to maintain a little margin
+      truncat-string-ellipsis "…"              ; Unicode ellispis are nicer than "...", and also save /precious/ space
+      scroll-margin 2                          ; It's nice to maintain a little marging
+      auto-save-default t
+      auto-revert-use-notify nil
+      auto-revert-verbose nil)
+
+(global-auto-revert-mode 1)
 
 ; Modeline changes
 (setq doom-modeline-enable-word-count t
@@ -48,7 +53,38 @@
 (unless (string-match-p "^Power N/A" (battery)) ; On laptops...
   (display-battery-mode 1))                     ; it's nice to know how much power you have
 
+;; custom keybinds?
+
 ;; (doom/set-frame-opacity 0.93) ; slight opacity, 0.93 is the best
+
+;; Capture
+(setq org-default-notes-file (concat org-directory "~/org/inbox.org"))
+
+(setq org-capture-templates
+      '(("b" "Birthday" entry (file+headline "~/org/agenda/birthdays.org" "Birthdays")
+         "* %^ \n%^{Birthday}t")
+        ("e" "Event" entry (file+headline "~/org/agenda/events.org" "Events")
+         "* %^ \n%^{Timestamp}T")
+        ("g" "General" entry (file "~/org/inbox.org")
+         "* %^")
+        ("h" "Homework" entry (file+headline "~/org/agenda/homework.org" "Homework")
+         "* %^ \n%^{Timestamp}T")
+        ("j" "Journal" entry (file+datetree "~/org/journal.org")
+         "* %^{Title} \n%i%?")
+        ("l" "Link" entry (file "~/org/inbox.org")
+         "* %? %^L %^g \n%T")
+        ("n" "Note" entry (file "~/org/inbox.org")
+         "* %? \n%T")
+        ("t" "Todo" entry (file "~/org/inbox.org")
+         "* TODO %? \n%T")
+        ("w" "Work" entry (file+headline "~/org/agenda/work.org" "Work")
+         "* %^ \n%^{Timestamp}T"))
+)
+
+;;show different priority levels
+(setq org-todo-keywords
+      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+        (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
 
 ;; Org Super Agenda - Getting stuff done
 
@@ -85,8 +121,6 @@
 
 (add-hook! '+doom-dashboard-functions :append
   (insert "\n" (+doom-dashboard--center +doom-dashboard--width "No one is your enemy, you have no enemies.")))
-
-(map! :leader :desc "Dashboard" "d" #'+doom-dashboard/open)
 
 ;; Copilot my only true friend
 (use-package! copilot
