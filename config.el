@@ -48,7 +48,8 @@
         doom-modeline-header-line nil
         doom-modeline-workspace-name t
         doom-modeline-time t
-        doom-modeline-env-version t)
+        doom-modeline-env-version t
+        display-time-mode t)
 
 (unless (string-match-p "^Power N/A" (battery)) ; On laptops...
   (display-battery-mode 1))                     ; it's nice to know how much power you have
@@ -112,6 +113,9 @@
                                 :order 3))
                        )))
           ))))
+
+;;Org habits are really useful for GTD
+(require 'org-habit)
 
 ;; dashboard changes
 
