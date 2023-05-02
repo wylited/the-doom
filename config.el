@@ -114,8 +114,14 @@
                        )))
           ))))
 
-;;Org habits are really useful for GTD
+;; Org habits are really useful for GTD
 (require 'org-habit)
+
+;;org-pomodoro customization
+(require 'org-pomodoro)
+(setq org-pomodoro-length 20
+      org-pomodoro-short-break-length 10
+      org-pomodoro-long-break-length 20)
 
 ;; dashboard changes
 
@@ -166,7 +172,6 @@
 (require 'typst-mode)
 
 ;; remove annoying af "package cl is deprecated"
-;;
 (defadvice! fixed-do-after-load-evaluation (abs-file)
   :override #'do-after-load-evaluation
   (dolist (a-l-element after-load-alist)
