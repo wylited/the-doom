@@ -117,7 +117,7 @@
 
 ;; dashboard changes
 
-(setq fancy-splash-image "/home/wyli/.config/doom/smallprofile.png")
+(setq fancy-splash-image "/home/wyli/.config/doom/smallprofile-ayu.png")
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 
@@ -134,7 +134,7 @@
          ("C-x" . 'copilot-accept-completion)))
 
 ;; mu4e setup
-(require 'mu4e)
+; (require 'mu4e)
 
 (setq mu4e-root-maildir (expand-file-name "~/mail"))
 
