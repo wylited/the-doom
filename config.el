@@ -3,11 +3,24 @@
 (setq user-full-name "wylited"
       user-mail-address "wylited@gmail.com")
 
-(setq doom-theme 'doom-ayu-mirage ; theme
-      doom-font (font-spec :family "FiraCode Nerd Font" :size 20 :weight 'medium)
-      doom-variable-pitch-font (font-spec :family "Hack Nerd Font" :size 20 :weight 'medium))
+(setq doom-theme 'doom-ayu-dark ; theme
+      doom-font (font-spec :family "JetBrainsMonoNL Nerd Font" :size 20 :weight 'medium))
 
-(setq display-line-numbers-type 'relative)
+(setq-default
+      delete-by-moving-to-trash t                    ; Deletes file to .trash
+      window-combination-resize t                    ; Takes new window space from all other windows
+      x-stretch-cursor t)                            ; Stretch color to glyph width
+
+(setq display-line-numbers-type 'relative
+      undo-limit 80000000                       ; Raise undo-limit to 80Mb
+            evil-want-fine-undo t                     ; By default while in insert all changes are one big blob. Be more granular
+            auto-save-default t                       ; Nobody likes to loose work, I certainly don't
+            truncat-string-ellipsis "…"              ; Unicode ellispis are nicer than "...", and also save /precious/ space
+            scroll-margin 2                          ; It's nice to maintain a little marging
+            auto-save-default t
+            auto-revert-use-notify nil
+            auto-revert-verbose nil)
+(global-auto-revert-mode 1)
 
 (setq org-directory "~/org/"
       org-agenda-directory "~/org/agenda/"
@@ -26,23 +39,6 @@
       org-agenda-block-separator nil
       org-agenda-start-with-log-mode t)
 
-(setq-default
-      delete-by-moving-to-trash t                    ; Deletes file to .trash
-      window-combination-resize t                    ; Takes new window space from all other windows
-      x-stretch-cursor t)                            ; Stretch color to glyph width
-
-(setq undo-limit 80000000                       ; Raise undo-limit to 80Mb
-      evil-want-fine-undo t                     ; By default while in insert all changes are one big blob. Be more granular
-      auto-save-default t                       ; Nobody likes to loose work, I certainly don't
-      truncat-string-ellipsis "…"              ; Unicode ellispis are nicer than "...", and also save /precious/ space
-      scroll-margin 2                          ; It's nice to maintain a little marging
-      auto-save-default t
-      auto-revert-use-notify nil
-      auto-revert-verbose nil)
-
-(global-auto-revert-mode 1)
-
-; Modeline changes
 (setq doom-modeline-enable-word-count t
         doom-modeline-icon t
         doom-modeline-header-line nil
@@ -53,10 +49,6 @@
 
 (unless (string-match-p "^Power N/A" (battery)) ; On laptops...
   (display-battery-mode 1))                     ; it's nice to know how much power you have
-
-;; custom keybinds?
-
-;; (doom/set-frame-opacity 0.93) ; slight opacity, 0.93 is the best
 
 ;; Capture
 (setq org-default-notes-file (concat org-directory "~/org/inbox.org"))
