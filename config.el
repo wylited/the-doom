@@ -26,7 +26,8 @@
       org-agenda-directory "~/org/agenda/"
       org-agenda-files (list "~/org/general.org"
                              "~/org/agenda/"
-                             "~/org/"))
+                             "~/org/"
+                             "~/org/notes/notes/"))
 
 (setq org-highest-priority ?A
       org-default-priority ?E
@@ -37,7 +38,8 @@
       org-agenda-include-deadlines t
       org-agenda-include-diary t
       org-agenda-block-separator nil
-      org-agenda-start-with-log-mode t)
+      org-agenda-start-with-log-mode t
+      org-agenda-start-on-weekday nil)
 
 (setq doom-modeline-enable-word-count t
         doom-modeline-icon t
@@ -83,8 +85,9 @@
 
 (setq org-agenda-custom-commands
       '(("w" "Wyli View"
-         ((agenda "" ((org-agenda-span 5)
-                      (org-agenda-overriding-header "cal")
+         ((agenda "" ((org-agenda-span 3)
+                      (org-agenda-start-on-weekday nil)
+                      (org-agenda-start-day "-1d")
                       (org-super-agenda-groups
                        '((:name "Today"
                                 :time-grid t
@@ -92,19 +95,22 @@
                                 :todo "TODAY"
                                 :scheduled today
                                 :order 1)))))
-          (org-agenda-list "" ((org-agenda-overriding-header "items")
-                      (org-super-agenda-groups
-                       '((:name "Important"
-                                :priority "A"
-                                :order 1)
-                         (:name "Homework"
-                                :tag "hw"
-                                :order 2)
-                         (:name :"Exams"
-                                :tag "exam"
-                                :order 3))
-                       )))
+          (alltodo "" ((org-agenda-overriding-header "")
+                       (org-super-agenda-groups
+                        '(
+                          ;; (:name "Habits"
+                          ;;       :habit t
+                          ;;       :order 1)
+                          (:name "Exams"
+                                 :tag "exams"
+                                 :order 6)
+                          (:name "Homework"
+                                 :tag "hw"
+                                 :order 2))
+                        )))
           ))))
+(org-super-agenda-mode)
+
 
 ;; Org habits are really useful for GTD
 (require 'org-habit)
@@ -171,3 +177,23 @@
                (string-match-p (car a-l-element) abs-file))
       (mapc #'funcall (cdr a-l-element))))
   (run-hook-with-args 'after-load-functions abs-file))
+
+(require 'ivy-posframe)
+
+(setq ivy-posframe-display-functions-alist
+      '((complete-symbol . ivy-posframe-display-at-point)
+        (counsel-M-x     . ivy-posframe-display-at-frame-top-center)))
+
+(ivy-posframe-mode 1)
+
+(setq org-roam-directory "~/org/notes/"
+      org-roam-completion-everywhere t)
+(org-roam-db-autosync-mode)
+
+(setq org-id-link-to-org-use-id t)
+
+(map! :prefix "C-c"
+      "r l" #'org-roam-buffer-toggle
+      "r f" #'org-roam-node-find
+      "r i" #'org-roam-node-insert
+      "r m" #'completion-at-point)

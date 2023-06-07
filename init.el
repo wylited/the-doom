@@ -24,7 +24,7 @@
        company             ; the ultimate code completion backend
        ;;helm              ; the *other* search engine for love and life
        ;;ido               ; the other *other* search engine...
-       ;;ivy               ; a search engine for love and life
+       ivy               ; a search engine for love and life
        vertico             ; the search engine of the future
 
        :ui
@@ -43,7 +43,7 @@
        ;;neotree           ; a project drawer, like NERDTree for vim
        ophints             ; highlight the region an operation acts on
        (popup +defaults)   ; tame sudden yet inevitable temporary windows
-       tabs                ; a tab bar for Emacs
+       ;;tabs                ; a tab bar for Emacs
        treemacs            ; a project drawer, like neotree but cooler
        unicode             ; extended unicode support for various languages
        (vc-gutter +pretty) ; vcs diff in the fringe
@@ -103,7 +103,7 @@
        ;;prodigy           ; FIXME managing external services & code builders
        rgb                 ; creating color strings
        ;;taskrunner        ; taskrunner for all your projects
-       terraform           ; infrastructure as code
+       ;;terraform           ; infrastructure as code
        tmux                ; an API for interacting with tmux
        tree-sitter         ; syntax and parsing, sitting in a tree...
        ;;upload            ; map local to remote projects via ssh/ftp
@@ -137,7 +137,7 @@
        ;;gdscript          ; the language you waited for
        (go +lsp)           ; the hipster dialect
        ;;(graphql +lsp)    ; Give queries a REST
-       (haskell +lsp)      ; a language that's lazier than I am
+       ;;(haskell +lsp)      ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        ;;json              ; At least it ain't XML
@@ -177,7 +177,7 @@
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
-       ;;web               ; the tubes
+       web                 ; the tubes
        ;;yaml              ; JSON, but readable
        zig                 ; C, but simpler
 
