@@ -197,3 +197,9 @@
       "r f" #'org-roam-node-find
       "r i" #'org-roam-node-insert
       "r m" #'completion-at-point)
+
+(setq org-roam-capture-templates
+   '(("d" "default" plain
+      "%?"
+      :if-new (file+head "${slug}.org" "${title}\n* TODO " )
+      :unnarrowed t)))

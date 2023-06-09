@@ -11,6 +11,10 @@
    '(((yasnippet zombie))
      ((yasnippet zombie))
      ((yasnippet zombie))
+     ((yasnippet zombie))
+     ((yasnippet zombie))
+     ((yasnippet zombie))
+     ((yasnippet zombie))
      (defvaralias))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
