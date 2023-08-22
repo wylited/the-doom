@@ -24,3 +24,15 @@
 (package! org-roam)
 
 (package! org-roam-ui)
+
+(package! org-fancy-priorities)
+
+(package! lsp-java)
+
+;; (package! dash-functional)
+
+(package! dash)
+
+(package! yasnippet-snippets)
+
+(package! elcord)

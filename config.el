@@ -7,19 +7,19 @@
       doom-font (font-spec :family "JetBrainsMonoNL Nerd Font" :size 20 :weight 'medium))
 
 (setq-default
-      delete-by-moving-to-trash t                    ; Deletes file to .trash
-      window-combination-resize t                    ; Takes new window space from all other windows
-      x-stretch-cursor t)                            ; Stretch color to glyph width
+ delete-by-moving-to-trash t                    ; Deletes file to .trash
+ window-combination-resize t                    ; Takes new window space from all other windows
+ x-stretch-cursor t)                            ; Stretch color to glyph width
 
 (setq display-line-numbers-type 'relative
       undo-limit 80000000                       ; Raise undo-limit to 80Mb
-            evil-want-fine-undo t                     ; By default while in insert all changes are one big blob. Be more granular
-            auto-save-default t                       ; Nobody likes to loose work, I certainly don't
-            truncat-string-ellipsis "…"              ; Unicode ellispis are nicer than "...", and also save /precious/ space
-            scroll-margin 2                          ; It's nice to maintain a little marging
-            auto-save-default t
-            auto-revert-use-notify nil
-            auto-revert-verbose nil)
+      evil-want-fine-undo t                     ; By default while in insert all changes are one big blob. Be more granular
+      auto-save-default t                       ; Nobody likes to loose work, I certainly don't
+      truncat-string-ellipsis "…"              ; Unicode ellispis are nicer than "...", and also save /precious/ space
+      scroll-margin 2                          ; It's nice to maintain a little marging
+      auto-save-default t
+      auto-revert-use-notify nil
+      auto-revert-verbose nil)
 (global-auto-revert-mode 1)
 
 (setq org-directory "~/org/"
@@ -27,7 +27,7 @@
       org-agenda-files (list "~/org/general.org"
                              "~/org/agenda/"
                              "~/org/"
-                             "~/org/notes/notes/"))
+                             "~/org/notes"))
 
 (setq org-highest-priority ?A
       org-default-priority ?E
@@ -41,13 +41,27 @@
       org-agenda-start-with-log-mode t
       org-agenda-start-on-weekday nil)
 
+(use-package org-fancy-priorities
+  :ensure t
+  :hook
+  (org-mode . org-fancy-priorities-mode))
+
+(setq org-fancy-priorities-list '((?A . "A")
+                                  (?B . "B")
+                                  (?C . "C")
+                                  (?D . "D")
+                                  (?E . "E")
+                                  (?F . "F")
+                                  (?G . "G")
+                                  (?H . "H")))
+
 (setq doom-modeline-enable-word-count t
-        doom-modeline-icon t
-        doom-modeline-header-line nil
-        doom-modeline-workspace-name t
-        doom-modeline-time t
-        doom-modeline-env-version t
-        display-time-mode t)
+      doom-modeline-icon t
+      doom-modeline-header-line nil
+      doom-modeline-workspace-name t
+      doom-modeline-time t
+      doom-modeline-env-version t
+      display-time-mode t)
 
 (unless (string-match-p "^Power N/A" (battery)) ; On laptops...
   (display-battery-mode 1))                     ; it's nice to know how much power you have
@@ -74,7 +88,7 @@
          "* TODO %? \n%T")
         ("w" "Work" entry (file+headline "~/org/agenda/work.org" "Work")
          "* %^ \n%^{Timestamp}T"))
-)
+      )
 
 ;;show different priority levels
 (setq org-todo-keywords
@@ -90,11 +104,11 @@
                       (org-agenda-start-day "-1d")
                       (org-super-agenda-groups
                        '((:name "Today"
-                                :time-grid t
-                                :date today
-                                :todo "TODAY"
-                                :scheduled today
-                                :order 1)))))
+                          :time-grid t
+                          :date today
+                          :todo "TODAY"
+                          :scheduled today
+                          :order 1)))))
           (alltodo "" ((org-agenda-overriding-header "")
                        (org-super-agenda-groups
                         '(
@@ -102,15 +116,26 @@
                           ;;       :habit t
                           ;;       :order 1)
                           (:name "Exams"
-                                 :tag "exams"
-                                 :order 6)
+                           :tag "exams"
+                           :order 6)
                           (:name "Homework"
-                                 :tag "hw"
-                                 :order 2))
+                           :tag "hw"
+                           :order 2))
                         )))
           ))))
 (org-super-agenda-mode)
 
+(setq-hook! org-mode
+  prettify-symbols-alist '(("#+end_quote" . "”")
+                           ("#+END_QUOTE" . "”")
+                           ("#+begin_quote" . "“")
+                           ("#+BEGIN_QUOTE" . "“")
+                           ("#+end_src" . "«")
+                           ("#+END_SRC" . "«")
+                           ("#+begin_src" . "»")
+                           ("#+BEGIN_SRC" . "»")
+                           ("#+name:" . "»")
+                           ("#+NAME:" . "»")))
 
 ;; Org habits are really useful for GTD
 (require 'org-habit)
@@ -128,7 +153,7 @@
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-footer)
 
 (add-hook! '+doom-dashboard-functions :append
-  (insert "\n" (+doom-dashboard--center +doom-dashboard--width "No one is your enemy, you have no enemies.")))
+  (insert "\n" (+doom-dashboard--center +doom-dashboard--width "No one is your enemy, you have no enemies.") "\n\n\n\n\n\n\n\n\n\n\n\n"))
 
 ;; Copilot my only true friend
 (use-package! copilot
@@ -140,7 +165,7 @@
          ("C-x" . 'copilot-accept-completion)))
 
 ;; mu4e setup
-; (require 'mu4e)
+                                        ; (require 'mu4e)
 
 (setq mu4e-root-maildir (expand-file-name "~/mail"))
 
@@ -160,8 +185,8 @@
 (setq mu4e-get-mail-command "offlineimap") ;; updating using U in main view
 ;; consult https://gist.github.com/areina/3879626 if anything goes wrong...
 
-; I like org-modern-mode
-; (global-org-modern-mode)
+                                        ; I like org-modern-mode
+                                        ; (global-org-modern-mode)
 
 ;; push typst-mode directory to the load-path like this
 
@@ -178,13 +203,13 @@
       (mapc #'funcall (cdr a-l-element))))
   (run-hook-with-args 'after-load-functions abs-file))
 
-(require 'ivy-posframe)
+;; (require 'ivy-posframe)
 
-(setq ivy-posframe-display-functions-alist
-      '((complete-symbol . ivy-posframe-display-at-point)
-        (counsel-M-x     . ivy-posframe-display-at-frame-top-center)))
+;; (setq ivy-posframe-display-functions-alist
+;;      '((complete-symbol . ivy-posframe-display-at-point)
+;;        (counsel-M-x     . ivy-posframe-display-at-frame-top-center)))
 
-(ivy-posframe-mode 1)
+;; (ivy-posframe-mode 1)
 
 (setq org-roam-directory "~/org/notes/"
       org-roam-completion-everywhere t)
@@ -199,7 +224,22 @@
       "r m" #'completion-at-point)
 
 (setq org-roam-capture-templates
-   '(("d" "default" plain
-      "%?"
-      :if-new (file+head "${slug}.org" "${title}\n* TODO " )
-      :unnarrowed t)))
+      '(("d" "default" plain
+         "%?"
+         :if-new (file+head "${slug}.org" "${title}\n* TODO " )
+         :unnarrowed t)))
+
+(with-eval-after-load 'org (global-org-modern-mode))
+
+(setq org-modern-priority-faces
+    (quote ((?A :background "red"
+                :foreground "black"))))
+
+(require 'elcord)
+(elcord-mode)
+
+(setq org-src-fontify-natively t)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((java . t)))
