@@ -4,7 +4,8 @@
       user-mail-address "wylited@gmail.com")
 
 (setq doom-theme 'doom-ayu-dark ; theme
-      doom-font (font-spec :family "JetBrainsMonoNL Nerd Font" :size 20 :weight 'medium))
+      doom-font (font-spec :family "JetBrainsMonoNL Nerd Font" :size 20 :weight 'medium)
+      doom-variable-pitch-font (font-spec :family "Lexend" :size 20 :weight 'thin))
 
 (setq-default
  delete-by-moving-to-trash t                    ; Deletes file to .trash
@@ -27,12 +28,12 @@
       org-agenda-files (list "~/org/general.org"
                              "~/org/agenda/"
                              "~/org/"
-                             "~/org/notes"))
+                             "~/org/agenda/cal/"))
 
 (setq org-highest-priority ?A
       org-default-priority ?E
       org-lowest-priority  ?H
-      org-agenda-time-grid (quote((daily today remove-match) (0900 1100 1300 1500 1700)  "......" "----------------"))
+      org-agenda-time-grid (quote((daily today remove-match) (0800 1100 1300 1500 1700)  "......" "----------------"))
       org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
       org-agenda-include-deadlines t
@@ -54,6 +55,8 @@
                                   (?F . "F")
                                   (?G . "G")
                                   (?H . "H")))
+(setq org-todo-keywords
+      '((sequence "TODO" "FDBK" "CHCK" "WAIT" "|" "DONE" "DLGTD" "PUSH" "HOLD" "CNCL")))
 
 (setq doom-modeline-enable-word-count t
       doom-modeline-icon t
@@ -90,18 +93,13 @@
          "* %^ \n%^{Timestamp}T"))
       )
 
-;;show different priority levels
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-        (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
-
 ;; Org Super Agenda - Getting stuff done
 
 (setq org-agenda-custom-commands
       '(("w" "Wyli View"
-         ((agenda "" ((org-agenda-span 3)
+         ((agenda "" ((org-agenda-span 7)
                       (org-agenda-start-on-weekday nil)
-                      (org-agenda-start-day "-1d")
+                      (org-agenda-start-day "-2d")
                       (org-super-agenda-groups
                        '((:name "Today"
                           :time-grid t
@@ -185,8 +183,6 @@
 (setq mu4e-get-mail-command "offlineimap") ;; updating using U in main view
 ;; consult https://gist.github.com/areina/3879626 if anything goes wrong...
 
-                                        ; I like org-modern-mode
-                                        ; (global-org-modern-mode)
 
 ;; push typst-mode directory to the load-path like this
 
@@ -243,3 +239,9 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((java . t)))
+
+(use-package! lsp
+    :ensure
+    :custom
+    (lsp-rust-analyzer-server-display-inlay-hints t)
+)
