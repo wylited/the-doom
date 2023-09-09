@@ -77,7 +77,7 @@
 
 (setq org-capture-templates
       '(("f" "french anki dict" entry (file+headline "~/org/anki/ib_french_ab.org" "IB French Ab")
-         "** %^{french} \n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic (and reversed card)\n:END:\n *** Front\n%^{french}\n *** Back\n%^{english}\n"))
+         "* %^{french} \n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic (and reversed card)\n:END:\n *** Front\n%\1\n *** Back\n%^{english}\n"))
       )
 
 ;; Org Super Agenda - Getting stuff done
