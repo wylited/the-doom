@@ -37,3 +37,6 @@
 
 (package! rust-mode)
 
+(package! anki-editor)
+
+(package! anki-connect)

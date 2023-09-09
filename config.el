@@ -5,7 +5,7 @@
 
 (setq doom-theme 'doom-ayu-dark ; theme
       doom-font (font-spec :family "JetBrainsMonoNL Nerd Font" :size 20 :weight 'medium)
-      doom-variable-pitch-font (font-spec :family "Lexend" :size 20 :weight 'thin))
+      doom-variable-pitch-font (font-spec :family "Lexend" :size 36 :weight 'light ))
 
 (setq-default
  delete-by-moving-to-trash t                    ; Deletes file to .trash
@@ -42,6 +42,9 @@
       org-agenda-start-with-log-mode t
       org-agenda-start-on-weekday nil)
 
+(add-hook 'org-mode-hook 'variable-pitch-mode)
+(add-hook 'org-mode-hook 'display-line-numbers-mode)
+
 (use-package org-fancy-priorities
   :ensure t
   :hook
@@ -73,24 +76,8 @@
 (setq org-default-notes-file (concat org-directory "~/org/inbox.org"))
 
 (setq org-capture-templates
-      '(("b" "Birthday" entry (file+headline "~/org/agenda/birthdays.org" "Birthdays")
-         "* %^ \n%^{Birthday}t")
-        ("e" "Event" entry (file+headline "~/org/agenda/events.org" "Events")
-         "* %^ \n%^{Timestamp}T")
-        ("g" "General" entry (file "~/org/inbox.org")
-         "* %^")
-        ("h" "Homework" entry (file+headline "~/org/agenda/homework.org" "Homework")
-         "* %^ \n%^{Timestamp}T")
-        ("j" "Journal" entry (file+datetree "~/org/journal.org")
-         "* %^{Title} \n%i%?")
-        ("l" "Link" entry (file "~/org/inbox.org")
-         "* %? %^L %^g \n%T")
-        ("n" "Note" entry (file "~/org/inbox.org")
-         "* %? \n%T")
-        ("t" "Todo" entry (file "~/org/inbox.org")
-         "* TODO %? \n%T")
-        ("w" "Work" entry (file+headline "~/org/agenda/work.org" "Work")
-         "* %^ \n%^{Timestamp}T"))
+      '(("f" "french anki dict" entry (file+headline "~/org/anki/ib_french_ab.org" "IB French Ab")
+         "** %^{french} \n:PROPERTIES:\n:ANKI_NOTE_TYPE: Basic (and reversed card)\n:END:\n *** Front\n%^{french}\n *** Back\n%^{english}\n"))
       )
 
 ;; Org Super Agenda - Getting stuff done
@@ -218,6 +205,11 @@
       "r f" #'org-roam-node-find
       "r i" #'org-roam-node-insert
       "r m" #'completion-at-point)
+
+(map! :prefix "C-c"
+      "a m" #'anki-editor-mode
+      "a i" #'anki-editor-insert-note
+      "a p" #'anki-editor-push-notes)
 
 (setq org-roam-capture-templates
       '(("d" "default" plain
