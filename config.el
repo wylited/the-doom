@@ -1,5 +1,7 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+(setq shell-file-name (executable-find "bash"))
+
 (setq user-full-name "wylited"
       user-mail-address "wylited@gmail.com")
 
@@ -12,7 +14,7 @@
  window-combination-resize t                    ; Takes new window space from all other windows
  x-stretch-cursor t)                            ; Stretch color to glyph width
 
-(setq display-line-numbers-type 'relative
+(setq display-line-numbers-type nil
       undo-limit 80000000                       ; Raise undo-limit to 80Mb
       evil-want-fine-undo t                     ; By default while in insert all changes are one big blob. Be more granular
       auto-save-default t                       ; Nobody likes to loose work, I certainly don't
@@ -61,16 +63,13 @@
 (setq org-todo-keywords
       '((sequence "TODO" "FDBK" "CHCK" "WAIT" "|" "DONE" "DLGTD" "PUSH" "HOLD" "CNCL")))
 
-(setq doom-modeline-enable-word-count t
+(setq doom-modeline-enable-word-count nil
       doom-modeline-icon t
       doom-modeline-header-line nil
       doom-modeline-workspace-name t
-      doom-modeline-time t
+      doom-modeline-time nil
       doom-modeline-env-version t
       display-time-mode t)
-
-(unless (string-match-p "^Power N/A" (battery)) ; On laptops...
-  (display-battery-mode 1))                     ; it's nice to know how much power you have
 
 ;; Capture
 (setq org-default-notes-file (concat org-directory "~/org/inbox.org"))
@@ -204,6 +203,7 @@
       "r l" #'org-roam-buffer-toggle
       "r f" #'org-roam-node-find
       "r i" #'org-roam-node-insert
+      "r x" #'org-roam-capture
       "r m" #'completion-at-point)
 
 (map! :prefix "C-c"
@@ -220,8 +220,8 @@
 (with-eval-after-load 'org (global-org-modern-mode))
 
 (setq org-modern-priority-faces
-    (quote ((?A :background "red"
-                :foreground "black"))))
+      (quote ((?A :background "red"
+               :foreground "black"))))
 
 (require 'elcord)
 (elcord-mode)
@@ -233,7 +233,45 @@
  '((java . t)))
 
 (use-package! lsp
-    :ensure
-    :custom
-    (lsp-rust-analyzer-server-display-inlay-hints t)
-)
+  :ensure
+  :custom
+  (lsp-rust-analyzer-server-display-inlay-hints t))
+
+(setq-default mode-line-format nil)
+
+(setq doom-modeline-height 50
+      doom-modeline-buffer-encoding nil
+      doom-modeline-minor-modes nil
+      doom-modeline-enable-word-count nil
+      doom-modeline-percent-position '(""))
+
+(custom-set-faces
+ '(mode-line ((t (:family "Lexend" :height 210))))
+ '(mode-line-active ((t (:family "Lexend" :height 210)))) ; For 29+
+ '(mode-line-inactive ((t (:family "Lexend" :height 210)))))
+
+(global-hide-mode-line-mode)
+(global-copilot-mode)                   ;
+(size-indication-mode)
+
+(setq inhibit-compacting-font-caches t)
+
+(setq-default header-line-format (doom-modeline-set-main-modeline))
+
+(set-face-background 'header-line (face-background 'mode-line))
+
+(setq mode-line-format nil)
+
+;; (add-hook 'prog-mode-hook            #'nano-modeline-prog-mode)
+;; (add-hook 'text-mode-hook            #'nano-modeline-text-mode)
+;; (add-hook 'org-mode-hook             #'nano-modeline-org-mode)
+;; (add-hook 'pdf-view-mode-hook        #'nano-modeline-pdf-mode)
+;; (add-hook 'mu4e-headers-mode-hook    #'nano-modeline-mu4e-headers-mode)
+;; (add-hook 'mu4e-view-mode-hook       #'nano-modeline-mu4e-message-mode)
+;; (add-hook 'elfeed-show-mode-hook     #'nano-modeline-elfeed-entry-mode)
+;; (add-hook 'elfeed-search-mode-hook   #'nano-modeline-elfeed-search-mode)
+;; (add-hook 'term-mode-hook            #'nano-modeline-term-mode)
+;; (add-hook 'xwidget-webkit-mode-hook  #'nano-modeline-xwidget-mode)
+;; (add-hook 'messages-buffer-mode-hook #'nano-modeline-message-mode)
+;; (add-hook 'org-capture-mode-hook     #'nano-modeline-org-capture-mode)
+;; (add-hook 'org-agenda-mode-hook      #'nano-modeline-org-agenda-mode)

@@ -21,7 +21,11 @@
 
 (package! org-roam)
 
-(package! org-roam-ui)
+(unpin! org-roam)
+
+(package! org-roam-ui
+  :recipe (:host github :repo "jgru/org-roam-ui" :branch "add-export-capability" :files ("*.el" "out"))
+  )
 
 (package! org-fancy-priorities)
 
@@ -40,3 +44,5 @@
 (package! anki-editor)
 
 (package! anki-connect)
+
+(package! nano-modeline)
