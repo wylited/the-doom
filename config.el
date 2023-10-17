@@ -6,7 +6,7 @@
       user-mail-address "wylited@gmail.com")
 
 (setq doom-theme 'doom-ayu-dark ; theme
-      doom-font (font-spec :family "JetBrainsMonoNL Nerd Font" :size 20 :weight 'medium)
+      doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'medium)
       doom-variable-pitch-font (font-spec :family "Lexend" :size 36 :weight 'light ))
 
 (setq-default
@@ -25,16 +25,26 @@
       auto-revert-verbose nil)
 (global-auto-revert-mode 1)
 
+(setq org-fancy-priorities-list '((?A . "HIGH")
+                                  (?B . "MID")
+                                  (?C . "LOW")
+                                  (?D . "EZ")))
+
 (setq org-directory "~/org/"
       org-agenda-directory "~/org/agenda/"
       org-agenda-files (list "~/org/general.org"
+                             "~/org/agenda/events.org"
                              "~/org/agenda/"
                              "~/org/"
                              "~/org/agenda/cal/"))
 
+(setq org-agenda-log-mode-items '(closed))
+
+(setq org-log-note-clock-out 't)
+
 (setq org-highest-priority ?A
-      org-default-priority ?E
-      org-lowest-priority  ?H
+      org-default-priority ?C
+      org-lowest-priority  ?D
       org-agenda-time-grid (quote((daily today remove-match) (0800 1100 1300 1500 1700)  "......" "----------------"))
       org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
@@ -208,18 +218,9 @@
 
 (setq org-roam-capture-templates
       '(("d" "default" plain
-         "%?"
-         :if-new (file+head "${slug}.org" "#+title: ${title}\n * TODO ${title}\n")
-         :unnarrowed t))
-      '(("e" "economics" plain
-         "%?"
-         :if-new (file+head "${slug}.org" "#+title: ${title}\n * TODO ${title} :econ:\n")
-         :unnarrowed t))
-      '(("p" "physics" plain
-         "%?"
-         :if-new (file+head "${slug}.org" "#+title: ${title}\n * TODO ${title} :physics:\n")
-         :unnarrowed t))
-      )
+         "* TODO ${title} :%?:\n"
+         :if-new (file+head "${slug}.org" "${title}\n")
+         :unnarrowed t)))
 
 (map! :prefix "C-c"
       "a m" #'anki-editor-mode
