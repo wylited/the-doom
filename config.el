@@ -1,6 +1,6 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(setq shell-file-name (executable-find "bash"))
+setq shell-file-name (executable-find "bash"))
 
 (setq user-full-name "wylited"
       user-mail-address "wylited@gmail.com")
@@ -25,11 +25,6 @@
       auto-revert-verbose nil)
 (global-auto-revert-mode 1)
 
-(setq org-fancy-priorities-list '((?A . "HIGH")
-                                  (?B . "MID")
-                                  (?C . "LOW")
-                                  (?D . "EZ")))
-
 (setq org-directory "~/org/"
       org-agenda-directory "~/org/agenda/"
       org-agenda-files (list "~/org/general.org"
@@ -44,7 +39,7 @@
 
 (setq org-highest-priority ?A
       org-default-priority ?C
-      org-lowest-priority  ?D
+      org-lowest-priority  ?E
       org-agenda-time-grid (quote((daily today remove-match) (0800 1100 1300 1500 1700)  "......" "----------------"))
       org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
@@ -158,34 +153,6 @@
          ("<tab>" . 'copilot-accept-completion)
          ("C-x" . 'copilot-accept-completion)))
 
-;; mu4e setup
-                                        ; (require 'mu4e)
-
-(setq mu4e-root-maildir (expand-file-name "~/mail"))
-
-(setq mu4e-drafts-folder "/[Gmail].Drafts")
-(setq mu4e-sent-folder   "/[Gmail].Sent Mail")
-(setq mu4e-trash-folder  "/[Gmail].Trash")
-
-;; don't save message to Sent Messages, GMail/IMAP will take care of this
-(setq mu4e-sent-messages-behavior 'delete)
-
-;; setup some handy shortcuts
-(setq mu4e-maildir-shortcuts
-      '(("/INBOX"             . ?i)
-        ("/[Gmail].Sent Mail" . ?s)
-        ("/[Gmail].Trash"     . ?t)))
-
-(setq mu4e-get-mail-command "offlineimap") ;; updating using U in main view
-;; consult https://gist.github.com/areina/3879626 if anything goes wrong...
-
-
-;; push typst-mode directory to the load-path like this
-
-(push (expand-file-name "modules/languages/typst-mode" user-emacs-directory) load-path)
-;; load tyspt-mode
-(require 'typst-mode)
-
 ;; remove annoying af "package cl is deprecated"
 (defadvice! fixed-do-after-load-evaluation (abs-file)
   :override #'do-after-load-evaluation
@@ -195,19 +162,9 @@
       (mapc #'funcall (cdr a-l-element))))
   (run-hook-with-args 'after-load-functions abs-file))
 
-;; (require 'ivy-posframe)
-
-;; (setq ivy-posframe-display-functions-alist
-;;      '((complete-symbol . ivy-posframe-display-at-point)
-;;        (counsel-M-x     . ivy-posframe-display-at-frame-top-center)))
-
-;; (ivy-posframe-mode 1)
-
 (setq org-roam-directory "~/org/notes/"
       org-roam-completion-everywhere t)
 (org-roam-db-autosync-mode)
-
-(setq org-id-link-to-org-use-id t)
 
 (map! :prefix "C-c"
       "r l" #'org-roam-buffer-toggle
@@ -215,12 +172,6 @@
       "r i" #'org-roam-node-insert
       "r x" #'org-roam-capture
       "r m" #'completion-at-point)
-
-(setq org-roam-capture-templates
-      '(("d" "default" plain
-         "* TODO ${title} :%?:\n"
-         :if-new (file+head "${slug}.org" "${title}\n")
-         :unnarrowed t)))
 
 (map! :prefix "C-c"
       "a m" #'anki-editor-mode
@@ -237,11 +188,6 @@
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((java . t)))
-
-(use-package! lsp
-  :ensure
-  :custom
-  (lsp-rust-analyzer-server-display-inlay-hints t))
 
 (setq-default mode-line-format nil)
 
@@ -268,16 +214,6 @@
 
 (setq mode-line-format nil)
 
-;; (add-hook 'prog-mode-hook            #'nano-modeline-prog-mode)
-;; (add-hook 'text-mode-hook            #'nano-modeline-text-mode)
-;; (add-hook 'org-mode-hook             #'nano-modeline-org-mode)
-;; (add-hook 'pdf-view-mode-hook        #'nano-modeline-pdf-mode)
-;; (add-hook 'mu4e-headers-mode-hook    #'nano-modeline-mu4e-headers-mode)
-;; (add-hook 'mu4e-view-mode-hook       #'nano-modeline-mu4e-message-mode)
-;; (add-hook 'elfeed-show-mode-hook     #'nano-modeline-elfeed-entry-mode)
-;; (add-hook 'elfeed-search-mode-hook   #'nano-modeline-elfeed-search-mode)
-;; (add-hook 'term-mode-hook            #'nano-modeline-term-mode)
-;; (add-hook 'xwidget-webkit-mode-hook  #'nano-modeline-xwidget-mode)
-;; (add-hook 'messages-buffer-mode-hook #'nano-modeline-message-mode)
-;; (add-hook 'org-capture-mode-hook     #'nano-modeline-org-capture-mode)
-;; (add-hook 'org-agenda-mode-hook      #'nano-modeline-org-agenda-mode)
+(require 'ox-json)
+
+(setq scroll-conservatively 1010000)
